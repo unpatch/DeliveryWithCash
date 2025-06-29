@@ -1,0 +1,56 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<LangVersion>default</LangVersion>
+		<IsPackable>false</IsPackable>
+		<AssemblyVersion>1.0.0</AssemblyVersion>
+		<FileVersion>1.0.0</FileVersion>
+		<NeutralLanguage>en-US</NeutralLanguage>
+		<LangVersion>latest</LangVersion>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+		<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+		<AssemblyName>DeliveryWithCash</AssemblyName>
+		<RootNamespace>DeliveryWithCash</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Remove="Patches\**" />
+	  <None Remove="Patches\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Include="src\Core.cs" />
+		<Compile Include="src\DeliveryShopPatch.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Reference Include="MelonLoader">
+	    <HintPath>lib\MelonLoader.dll</HintPath>
+	  </Reference>
+	  <Reference Include="0Harmony">
+	    <HintPath>lib\0Harmony.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Assembly-CSharp">
+	    <HintPath>lib\Assembly-CSharp.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Il2CppFishNet.Runtime">
+	    <HintPath>lib\Il2CppFishNet.Runtime.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Il2CppInterop.Runtime">
+	    <HintPath>lib\Il2CppInterop.Runtime.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Il2Cppmscorlib">
+	    <HintPath>lib\Il2Cppmscorlib.dll</HintPath>
+	  </Reference>
+	  <Reference Include="UnityEngine.CoreModule">
+	    <HintPath>lib\UnityEngine.CoreModule.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
+	
+</Project>
