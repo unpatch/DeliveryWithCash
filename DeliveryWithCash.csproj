@@ -20,11 +20,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Remove="Patches\**" />
-	  <None Remove="Patches\**" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<Compile Include="src\Core.cs" />
 		<Compile Include="src\DeliveryShopPatch.cs" />
 	</ItemGroup>
