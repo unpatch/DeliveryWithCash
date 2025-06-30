@@ -1,4 +1,4 @@
-# 💸 Schedule I: Cash-Only Illegal Deliveries Mod
+# 💸 Schedule I: [Illegal] Delivery With Cash Mod
 
 This mod fixes a gameplay inconsistency in the game **Schedule I** where illegal shops accessed via the in-game delivery app would incorrectly charge your **bank account** instead of requiring **cash**, as they do in person.
 
@@ -6,17 +6,20 @@ With this mod, **all illegal transactions** now correctly **require cash only**,
 
 
 ## 📋 Requirements
+
+- 💊 Schedule I - Public branch (IL2CPP)
 - 🍉 [MelonLoader](https://github.com/LavaGang/MelonLoader)
 
 ## 🔧 Installation
 
-1. Download the latest version from the [Releases](https://github.com/unpatch/DeliveryWithCash/releases) page.
-2. Drop the mod file `DeliveryWithCash.dll` into your `Schedule I` mods directory.
+1. Make sure you have properly installed and setup MelonLoader.
+2. Download the latest version from the [Releases](https://github.com/unpatch/DeliveryWithCash/releases) page.
+3. Drop the mod file `DeliveryWithCash.dll` into your `Schedule I` mods directory.
 
 ## 🧪 Tested On
 
-- Game Version: `0.3.6f6`
-- Melon Loader: `0.7.1`
+- Game: `v0.3.6f6`
+- Melon Loader: `v0.7.1`
 
 
 ## 🗨️ Why This Mod?
