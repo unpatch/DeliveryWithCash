@@ -1,4 +1,5 @@
 # 💸 Schedule I: [Illegal] Delivery With Cash Mod
+![Delivery With Cash image](./assets/DeliveryWithCash.jpg)
 
 This mod fixes a gameplay inconsistency in the game **Schedule I** where illegal shops accessed via the in-game delivery app would incorrectly charge your **bank account** instead of requiring **cash**, as they do in person.
 
