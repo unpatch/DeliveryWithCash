@@ -8,7 +8,6 @@ With this mod, **all illegal transactions** now correctly **require cash only**,
 
 ## 📋 Requirements
 
-- 💊 Schedule I - Public branch (IL2CPP)
 - 🍉 [MelonLoader](https://github.com/LavaGang/MelonLoader)
 
 ## 🔧 Installation
