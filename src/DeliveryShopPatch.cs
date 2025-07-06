@@ -24,6 +24,7 @@ namespace DeliveryWithCash;
 [HarmonyPatch(typeof(DeliveryShop))]
 public static class DeliveryShopPatch
 {
+#if MONO
     public static MethodInfo GetOrderTotal = typeof(DeliveryShop).GetMethod("GetOrderTotal", BindingFlags.NonPublic | BindingFlags.Instance);
     public static MethodInfo GetOrderItemCount = typeof(DeliveryShop).GetMethod("GetOrderItemCount", BindingFlags.NonPublic | BindingFlags.Instance);
 
@@ -72,6 +73,49 @@ public static class DeliveryShopPatch
         PlayerSingleton<DeliveryApp>.Instance.PlayOrderSubmittedAnim();
         __instance.ResetCart();
     }
+#else
+    [HarmonyPatch(nameof(DeliveryShop.OrderPressed))]
+    [HarmonyPrefix]
+    public static void OrderPressed(ref DeliveryShop __instance, ref bool __runOriginal)
+    {
+        __runOriginal = false;
+        string reason;
+        if (!__instance.CanOrder(out reason))
+        {
+            Debug.LogWarning("Cannot order: " + reason);
+            return;
+        }
+
+        float orderTotal = __instance.GetOrderTotal();
+        List<StringIntPair> list = new List<StringIntPair>();
+        foreach (ListingEntry listingEntry in __instance.listingEntries)
+        {
+            if (listingEntry.SelectedQuantity > 0)
+            {
+                list.Add(new StringIntPair(listingEntry.MatchingListing.Item.ID, listingEntry.SelectedQuantity));
+            }
+        }
+        int orderItemCount = __instance.GetOrderItemCount();
+        int timeUntilArrival = Mathf.RoundToInt(Mathf.Lerp(60f, 360f, Mathf.Clamp01((float)orderItemCount / 160f)));
+        DeliveryInstance delivery = new DeliveryInstance(GUIDManager.GenerateUniqueGUID().ToString(),
+                                                         __instance.MatchingShopInterfaceName,
+                                                         __instance.destinationProperty.PropertyCode,
+                                                         __instance.loadingDockIndex - 1,
+                                                         list.ToArray(),
+                                                         EDeliveryStatus.InTransit,
+                                                         timeUntilArrival);
+
+        NetworkSingleton<DeliveryManager>.Instance.SendDelivery(delivery);
+
+        if (__instance.MatchingShop.PaymentType == EPaymentType.Cash)
+            NetworkSingleton<MoneyManager>.Instance.ChangeCashBalance(-orderTotal, true, false);
+        else
+            NetworkSingleton<MoneyManager>.Instance.CreateOnlineTransaction("Delivery from " + __instance.MatchingShop.ShopName, -orderTotal, 1f, string.Empty);
+
+        PlayerSingleton<DeliveryApp>.Instance.PlayOrderSubmittedAnim();
+        __instance.ResetCart();
+    }
+#endif
 
     [HarmonyPatch(nameof(DeliveryShop.CanOrder))]
     [HarmonyPrefix]
@@ -89,6 +133,7 @@ public static class DeliveryShopPatch
             return;
         }
 
+#if MONO
         if (__instance.MatchingShop.PaymentType == EPaymentType.Cash &&
             (float)GetOrderTotal.Invoke(__instance, null) > NetworkSingleton<MoneyManager>.Instance.cashBalance)
         {
@@ -97,5 +142,15 @@ public static class DeliveryShopPatch
             __runOriginal = false;
             return;
         }
+#else
+        if (__instance.MatchingShop.PaymentType == EPaymentType.Cash &&
+            __instance.GetOrderTotal() > NetworkSingleton<MoneyManager>.Instance.cashBalance)
+        {
+            reason = "Insufficient cash";
+            __result = false;
+            __runOriginal = false;
+            return;
+        }
+#endif
     }
 }
