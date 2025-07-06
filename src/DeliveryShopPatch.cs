@@ -153,4 +153,15 @@ public static class DeliveryShopPatch
         }
 #endif
     }
+
+    [HarmonyPatch(nameof(DeliveryShop.HasActiveDelivery))]
+    [HarmonyPrefix]
+    public static void HasActiveDelivery(ref DeliveryShop __instance, ref bool __result, ref bool __runOriginal)
+    {
+        if (Core.MoreVans)
+        {
+            __result = false;
+            __runOriginal = false;
+        }
+    }
 }
