@@ -46,8 +46,8 @@
 
 
 	<ItemGroup>
-		<Compile Include="src\Core.cs" />
-		<Compile Include="src\DeliveryShopPatch.cs" />
+		<Compile Include="Core.cs" />
+		<Compile Include="DeliveryShopPatch.cs" />
 	</ItemGroup>
 
 	<ItemGroup Condition="$(Configuration.Contains('IL2CPP'))">
