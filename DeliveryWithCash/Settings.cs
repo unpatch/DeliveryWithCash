@@ -20,7 +20,9 @@ public static class Settings
             switch (key)
             {
                 case EKeys.OnlyCash:
-                    m_category.CreateEntry<bool>(key.GetString(), false);
+                    m_category.CreateEntry<bool>(identifier: key.GetString(),
+                                                 default_value: false,
+                                                 description: "all the shops take cash");
                     break;
             }
         }
