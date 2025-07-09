@@ -135,7 +135,7 @@ public static class DeliveryShopPatch
         }
 
 #if MONO
-        if (__instance.MatchingShop.PaymentType == EPaymentType.Cash &&
+        if ((Settings.Get<bool>(ESettings.OnlyCash) || __instance.MatchingShop.PaymentType == EPaymentType.Cash) &&
             (float)GetOrderTotal.Invoke(__instance, null) > NetworkSingleton<MoneyManager>.Instance.cashBalance)
         {
             reason = "Insufficient cash";
@@ -144,7 +144,7 @@ public static class DeliveryShopPatch
             return;
         }
 #else
-        if (__instance.MatchingShop.PaymentType == EPaymentType.Cash &&
+        if ((Settings.Get<bool>(ESettings.OnlyCash) || __instance.MatchingShop.PaymentType == EPaymentType.Cash) &&
             __instance.GetOrderTotal() > NetworkSingleton<MoneyManager>.Instance.cashBalance)
         {
             reason = "Insufficient cash";
