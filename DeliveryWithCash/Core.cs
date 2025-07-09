@@ -14,8 +14,12 @@ namespace DeliveryWithCash;
 
 public class Core : MelonMod
 {
+
     public override void OnInitializeMelon()
     {
-        LoggerInstance.Msg("DeliveryWithCash initialized.");
+        LoggerInstance.Msg($"{Info.Name} initialized.");
+
+        Settings.LoadSettings(Melon<Core>.Instance);
     }
+
 }

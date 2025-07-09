@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using UnityEngine;
 using System.Reflection;
+using ESettings = DeliveryWithCash.Settings.EKeys;
 
 #if IL2CPP
 using Il2Cpp;
@@ -65,7 +66,7 @@ public static class DeliveryShopPatch
 
         NetworkSingleton<DeliveryManager>.Instance.SendDelivery(delivery);
 
-        if (__instance.MatchingShop.PaymentType == EPaymentType.Cash)
+        if (Settings.Get<bool>(ESettings.OnlyCash) || __instance.MatchingShop.PaymentType == EPaymentType.Cash)
             NetworkSingleton<MoneyManager>.Instance.ChangeCashBalance(-orderTotal, true, false);
         else
             NetworkSingleton<MoneyManager>.Instance.CreateOnlineTransaction("Delivery from " + __instance.MatchingShop.ShopName, -orderTotal, 1f, string.Empty);
@@ -107,7 +108,7 @@ public static class DeliveryShopPatch
 
         NetworkSingleton<DeliveryManager>.Instance.SendDelivery(delivery);
 
-        if (__instance.MatchingShop.PaymentType == EPaymentType.Cash)
+        if (Settings.Get<bool>(ESettings.OnlyCash) || (__instance.MatchingShop.PaymentType == EPaymentType.Cash))
             NetworkSingleton<MoneyManager>.Instance.ChangeCashBalance(-orderTotal, true, false);
         else
             NetworkSingleton<MoneyManager>.Instance.CreateOnlineTransaction("Delivery from " + __instance.MatchingShop.ShopName, -orderTotal, 1f, string.Empty);
